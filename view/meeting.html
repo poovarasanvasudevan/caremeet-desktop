@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Caremeet</title>
+
+
+    <link rel="stylesheet" href="../static/aui-prototyping.css">
+    <link rel="stylesheet" href="../static/aui-prototyping.nodeps.css">
+    <link rel="stylesheet" href="../static/css/grid.css">
+    <link rel="stylesheet" href="../static/css/flex.css">
+    <link rel="stylesheet" href="../static/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+
+</head>
+<body>
+
+<div class="page">
+    <div class="page-content" style="margin-bottom: -30px">
+        <div class="aui-sidebar" aria-expanded="false">
+            <div class="aui-sidebar-wrapper mwrap-sidebar">
+                <div class="aui-sidebar-body">
+                    <header class="aui-page-header">
+                        <div class="aui-page-header-inner">
+                            <div class="aui-page-header-image">
+                        <span class="aui-avatar aui-avatar-project" style="height: 50px;width: 50px;padding: 8px;">
+                            <span class="aui-avatar-inner">
+                                <img width="50" height="50" class="meetingAvatar" alt="" role="presentation">
+                            </span>
+                        </span>
+                            </div>
+                            <div class="aui-page-header-main title-header-padding">
+                                <h1 class="meetingName"></h1>
+                                <ol class="aui-nav aui-nav-breadcrumbs">
+                                    <li>
+                                        <span class="aui-nav-item-label timing-label">@{{query.user}}</span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </header>
+
+                    <nav class="aui-navgroup aui-navgroup-vertical">
+                        <div class="aui-navgroup-inner">
+                            <div class="aui-sidebar-group aui-sidebar-group-tier-one">
+                                <div class="aui-nav-heading" title="Actions">
+                                    <strong>Users</strong>
+                                </div>
+
+                                <ul class="aui-nav" title="Page actions" id="user-list">
+
+                                </ul>
+                            </div>
+
+                            <div class="aui-sidebar-group aui-sidebar-group-tier-one">
+                                <div class="aui-nav-heading" title="Stuff">
+                                    <strong>Controls</strong>
+                                </div>
+
+                                <ul class="aui-nav">
+                                    <li class="aui-nav-item" id="screen-share">
+                                        <a class="aui-nav-item" title="Screen Share">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-screen"></span>
+                                            <span class="aui-nav-item-label">Screen Share</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="aui-nav-item" id="webcam-share">
+                                        <a class="aui-nav-item" title="Webcam Share">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-video-filled"></span>
+                                            <span class="aui-nav-item-label">Webcam Share</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="aui-nav-item"
+                                           title="Mute Audio">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-vid-audio-muted"></span>
+                                            <span class="aui-nav-item-label">Mute</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="aui-nav-item" title="Chat">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-comment"></span>
+                                            <span class="aui-nav-item-label">Chat</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <!-- Sidebar footer contains the expand/collapse trigger, and optionally a button or a dropdown with configuration settings -->
+                <div class="aui-sidebar-footer">
+                    <a class="aui-button aui-button-subtle aui-sidebar-settings-button"
+                       title="Settings">
+                        <span class="aui-icon aui-icon-small aui-iconfont-settings"></span>
+                        <span class="aui-button-label">Settings</span>
+                    </a>
+                    <a class="aui-button aui-button-subtle aui-sidebar-toggle aui-sidebar-footer-tipsy"
+                       title="Collapse sidebar ( [ )">
+                        <span class="aui-icon aui-icon-small"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="aui-page-panel w100h100">
+            <div class="aui-page-panel-inner h100">
+                <section class=" disp-table aui-page-panel-content padding0">
+
+                    <div class="row h100 disp-table-row" style="margin: 0 !important;">
+                        <div class="col-xs-12
+                            col-sm-12
+                            col-md-12
+                            col-lg-12" id="video-parent"
+                             style="display:flex; flex-direction: column; height: 100%;min-height: 100%;">
+
+                            <div id="videos-container">
+                            </div>
+
+                            <div id="main-video-elem"
+                                 style="height: 100% ;display: flex;align-items: center; justify-content: center;flex: 1;">
+                                <h1 class="meetingName">}</h1>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="audios-container" style="display: none;"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+<script>if (typeof module === 'object') {
+    window.module = module;
+    module = undefined;
+}</script>
+
+<script>
+    window.require('../core/toolbars/meeting.js');
+</script>
+
+<script src="../static/javascript/jquery.js"></script>
+<script src="../static/aui-prototyping.js"></script>
+<script src="../static/aui-prototyping.nodeps.js"></script>
+<script src="../static/aui-css-deprecations.js"></script>
+<script src="../static/javascript/avatar.js"></script>
+<script src="../static/javascript/soyutils.js"></script>
+<script src="../static/javascript/soyutils_usegoog.js"></script>
+<script src="../static/javascript/app.soy.js"></script>
+
+
+
+<script src="../static/javascript/rtc/rtcConnection.js"></script>
+<script src="../static/javascript/rtc/adapter.js"></script>
+<script src="../static/javascript/rtc/socketio.js"></script>
+<script src="../static/javascript/rtc/detect.js"></script>
+<script src="../static/javascript/rtc/hark.js"></script>
+<script src="../static/javascript/rtc/screen.js"></script>
+<script src="../static/javascript/rtc/getHTMLMediaElement.js"></script>
+<script src="../static/javascript/rtc/stat.js"></script>
+
+<script>if (window.module) module = window.module;</script>
+<script>
+    var electron = require('electron');
+    var currentWindow = electron.remote.getCurrentWindow();
+    var args = currentWindow.args;
+    console.log(args.meetinginfo.data.meetingid);
+
+
+    $('.meetingAvatar').attr('avatar', args.meetinginfo.data.meetingid);
+    $('.meetingName').html(args.meetinginfo.data.meetingid);
+</script>
+
+<script>
+
+    const ipc = require('electron').ipcRenderer;
+    AJS.whenIType('ze').execute(function () {
+        ipc.send('sharescreen' , { meetingid : "test" })
+    });
+
+    var FULL_STREAM = {};
+    $(function () {
+
+        DetectRTC.load(() => {
+            if (!DetectRTC.hasMicrophone) {
+                alert('MicroPhone not Available');
+            }
+
+            if (!DetectRTC.hasSpeakers) {
+                alert('Speaker not Available');
+            }
+        });
+
+        var room = args.meetinginfo.data.meetingid || connection.token();
+        var connection = new RTCMultiConnection();
+
+
+        // connection.enableScalableBroadcast = true;
+        connection.socketURL = 'https://10.1.35.65/';
+        connection.enableLogs = true;
+        connection.UA = connection.DetectRTC.browser;
+
+        connection.session = {
+            audio: true,
+            video: false,
+            screen: false,
+            data: true
+        };
+        connection.extra = {
+            name: 'PooDesktopApp'
+        };
+        connection.mediaConstraints = {
+            audio: true,
+            video: false
+        };
+        connection.iceServers = [{
+            'urls': [
+                'stun:stun.l.google.com:19302',
+                'stun:stun1.l.google.com:19302',
+                'stun:stun2.l.google.com:19302',
+                'stun:stun.l.google.com:19302?transport=udp',
+            ]
+        }];
+
+        connection.sdpConstraints.mandatory = {
+            OfferToReceiveAudio: true,
+            OfferToReceiveVideo: false
+        };
+
+
+        connection.audiosContainer = document.getElementById('audios-container');
+        connection.videosContainer = document.getElementById('videos-container');
+        connection.onstream = function (event) {
+            if (event.type !== 'local') {
+                if (event.stream.isVideo || event.stream.isScreen) {
+
+                    var existing = document.getElementById(event.streamid);
+                    if (existing && existing.parentNode) {
+                        existing.parentNode.removeChild(existing);
+                    }
+                    event.mediaElement.removeAttribute('src');
+                    event.mediaElement.removeAttribute('srcObject');
+                    event.mediaElement.muted = true;
+                    event.mediaElement.volume = 0;
+
+
+                    var video = document.createElement('video');
+                    try {
+                        video.setAttributeNode(document.createAttribute('autoplay'));
+                        video.setAttributeNode(document.createAttribute('playsinline'));
+                    } catch (e) {
+                        video.setAttribute('autoplay', true);
+                        video.setAttribute('playsinline', true);
+                    }
+                    if (event.type === 'local') {
+                        video.volume = 0;
+                        try {
+                            video.setAttributeNode(document.createAttribute('muted'));
+                        } catch (e) {
+                            video.setAttribute('muted', true);
+                        }
+                    }
+                    video.srcObject = event.stream;
+                    video.setAttribute('width', $('#video-container-parent').width() - 30);
+                    video.setAttribute('class', "pad15 mvideo");
+                    connection.videosContainer.appendChild(video);
+
+                    FULL_STREAM[event.streamid] = {element: video.cloneNode(true), src: event.stream};
+                    video.setAttribute('id', event.streamid);
+
+                    $('.mvideo').on('click', function () {
+                        $('#main-video-elem').html('');
+                        var mvideo = FULL_STREAM[$(this).attr('id')];
+                        mvideo['element'].setAttribute('width', $('#video-parent').width() - 100);
+                        mvideo['element'].srcObject = mvideo['src'];
+                        $('#main-video-elem').append(mvideo['element']);
+                    });
+                } else {
+                    var width = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
+                    var mediaElement = getHTMLMediaElement(event.mediaElement, {
+                        title: event.userid,
+                        buttons: ['full-screen'],
+                        width: width,
+                        showOnMouseEnter: false
+                    });
+                    connection.audiosContainer.appendChild(mediaElement);
+                    setTimeout(function () {
+                        mediaElement.media.play();
+                    }, 5000);
+                    mediaElement.id = event.streamid;
+                }
+            }
+
+            initHark({
+                stream: event.stream,
+                streamedObject: event,
+                connection: connection
+            });
+
+        };
+
+        connection.onspeaking = function (e) {
+            connection.send({
+                streamid: e.streamid,
+                speaking: true
+            });
+        };
+
+        connection.onopen = function (event) {
+            connection.onUserStatusChanged({
+                userid: event.userid,
+                extra: event.extra,
+                status: 'online'
+            });
+        };
+
+        connection.onUserStatusChanged = function (status) {
+            //document.getElementById(event.userid).src = status === 'online' ? 'online.gif' : 'offline.gif';
+            renderUser();
+        };
+
+        connection.onleave = connection.onclose = function (event) {
+            connection.onUserStatusChanged({
+                userid: event.userid,
+                extra: event.extra,
+                status: 'offline'
+            });
+        };
+
+        connection.onsilence = function (e) {
+            connection.send({
+                streamid: e.streamid,
+                silence: true
+            });
+
+        };
+
+
+        connection.onmessage = function (event) {
+            if (event.data.speaking) {
+                $('#' + event.userid + "_speaker").show();
+
+            }
+            if (event.data.silence) {
+                $('#' + event.userid + "_speaker").hide();
+            }
+        };
+
+        connection.onstreamended = function (event) {
+            var mediaElement = document.getElementById(event.streamid);
+            if (mediaElement) {
+                mediaElement.parentNode.removeChild(mediaElement);
+                $('#main-video-elem').html('');
+                delete FULL_STREAM[event.streamid];
+            }
+        };
+
+        connection.onMediaError = function (e) {
+            if (e.message === 'Concurrent mic process limit.') {
+                if (DetectRTC.audioInputDevices.length <= 1) {
+                    alert('Please select external microphone.');
+                    return;
+                }
+                var secondaryMic = DetectRTC.audioInputDevices[1].deviceId;
+                connection.mediaConstraints.audio = {
+                    deviceId: secondaryMic
+                };
+                connection.join(connection.sessionid);
+            }
+        };
+        connection.openOrJoin(room);
+
+
+        connection.onNewParticipant = function (participantId, userPreferences) {
+            connection.acceptParticipationRequest(participantId, userPreferences);
+            renderUser();
+        };
+        connection.onmute = function (event) {
+            if (event.stream.pause) {
+                $('#' + event.userid + "_mute").show();
+            }
+        };
+        connection.onunmute = function (event) {
+            if (event.stream.resume) {
+                $('#' + event.userid + "_mute").hide();
+            }
+        };
+        connection.onEntireSessionClosed = function (event) {
+            console.info('Entire session is closed: ', event.sessionid, event.extra);
+        };
+
+        renderUser();
+
+        AJS.$('.stat-tooltip').tooltip();
+
+        function renderUser() {
+            $('#user-list').html('');
+
+            connection.getAllParticipants().forEach(function (remoteUserId) {
+                var user = connection.peers[remoteUserId];
+                var extra = user.extra;
+
+                $('#user-list').append(com.poovarasan.application.onlineUsers({
+                    title: extra.name,
+                    userid: remoteUserId,
+                    presenter: true
+                }));
+
+            });
+        }
+
+
+        $('#webcam-share').on('click', function () {
+
+            DetectRTC.load(() => {
+                if (!DetectRTC.hasWebcam) {
+                    alert('No Webcam found');
+                    return;
+                }
+
+                var screenClick = $(this);
+                if ($(this).hasClass('aui-nav-selected')) {
+                    $(this).removeClass('aui-nav-selected');
+                    $(this).find('.aui-nav-item-label').html('Webcam Sharing');
+
+                    connection.removeStream($(this).attr('streamid'));
+                    connection.renegotiate();
+                } else {
+                    $(this).addClass('aui-nav-selected');
+                    $(this).find('.aui-nav-item-label').html('Remove Webcam');
+
+                    connection.addStream({
+                        video: true,
+                        streamCallback: function (screenStream) {
+                            screenClick.attr('streamid', screenStream.streamid);
+                            if (!screenStream) {
+                                alert('User did NOT select to share any stream. He clicked "Cancel" button instead.');
+                                return;
+                            }
+                            screenStream.onended = function () {
+                                screenClick.removeClass('aui-nav-selected');
+                                screenClick.find('.aui-nav-item-label').html('Screen Sharing');
+                            };
+                        }
+                    });
+                }
+            });
+        });
+
+        $('#mute-button').on('click', function () {
+            if ($(this).hasClass('muted')) {
+                connection.streamEvents.selectFirst({local: true}).stream.unmute();
+                $(this).html('Mute');
+                $(this).removeClass('muted');
+            } else {
+                connection.streamEvents.selectFirst({local: true}).stream.mute();
+                $(this).html('Un-Mute');
+                $(this).addClass('muted');
+            }
+        });
+
+        $('#screen-share').on('click', function () {
+            ipc.send('sharescreen' , { meetingid : "test" })
+            // var screenClick = $(this);
+            // if ($(this).hasClass('aui-nav-selected')) {
+            //     $(this).removeClass('aui-nav-selected');
+            //     $(this).find('.aui-nav-item-label').html('Screen Sharing');
+            //
+            //     connection.removeStream($(this).attr('streamid'));
+            //     connection.renegotiate();
+            // } else {
+            //     $(this).addClass('aui-nav-selected');
+            //     $(this).find('.aui-nav-item-label').html('Remove Sharing');
+            //
+            //     //connection.attachStreams[0].addTrack()
+            //     //connection.
+            //
+            //     connection.addStream({
+            //         screen: true,
+            //         oneway: true,
+            //         streamCallback: function (screenStream) {
+            //
+            //             if (!screenStream) {
+            //                 alert('User did NOT select to share any stream. He clicked "Cancel" button instead.');
+            //                 return;
+            //             }
+            //
+            //             screenClick.attr('streamid', screenStream.streamid);
+            //             screenStream.onended = function () {
+            //                 screenClick.removeClass('aui-nav-selected');
+            //                 screenClick.find('.aui-nav-item-label').html('Screen Sharing');
+            //             };
+            //         }
+            //     });
+            // }
+
+        });
+
+        function initHark(args) {
+            if (!window.hark) {
+                throw 'Please link hark.js';
+                return;
+            }
+
+            var connection = args.connection;
+            var streamedObject = args.streamedObject;
+            var stream = args.stream;
+
+            var options = {};
+            var speechEvents = hark(stream, options);
+
+            speechEvents.on('speaking', function () {
+                connection.onspeaking(streamedObject);
+            });
+
+            speechEvents.on('stopped_speaking', function () {
+                connection.onsilence(streamedObject);
+            });
+        }
+
+        window.connection = connection;
+    });
+
+
+</script>
+
+</body>
+</html>

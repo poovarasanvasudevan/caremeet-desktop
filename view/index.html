@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Caremeet</title>
+
+    <link rel="stylesheet" href="../static/aui-prototyping.css">
+    <link rel="stylesheet" href="../static/aui-prototyping.nodeps.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+
+
+</head>
+<body>
+<div class="page">
+    <div class="page-content">
+        <form class="aui top-label" style="padding: 50px;">
+            <div class="field-group">
+                <label for="meetingid">Meeting ID<span class="aui-icon icon-required">(required)</span></label>
+                <input class="text long-field" type="text"
+                       id="meetingid" name="meetingid" placeholder="you@example.com">
+            </div>
+
+            <div class="buttons-container">
+                <div class="buttons">
+                    <input class="aui-button aui-button-primary"  type="button" value="Join" id="join">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="page-footer">
+        <input class="aui-button aui-button-primary" type="button" value="Signup">
+    </div>
+</div>
+
+
+<script src="../static/javascript/jquery.js"></script>
+<script src="../static/aui-prototyping.js"></script>
+<script src="../static/aui-prototyping.nodeps.js"></script>
+<script src="../static/aui-css-deprecations.js"></script>
+
+<script>
+    window.require('../core/toolbars/start.js');
+    if ( typeof module === "object" && typeof module.exports === "object" ) {
+        window.$ = window.jQuery = require('jquery');
+    }
+</script>
+
+<script>
+    const ipc = require('electron').ipcRenderer;
+    document.getElementById('join').addEventListener('click', () => {
+        ipc.send('join' , { meetingid : document.getElementById('meetingid').value })
+        const remote = require('electron').remote;
+        remote.getCurrentWindow().close();
+    });
+</script>
+</body>
+</html>

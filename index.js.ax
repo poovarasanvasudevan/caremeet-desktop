@@ -1,0 +1,84 @@
+const {app, BrowserWindow, Tray, Menu, MenuItem, Notification, protocol} = require('electron');
+
+
+let win;
+let tray = null;
+let PROTOCOL_PREFIX = "caremeet";
+
+
+app.setLoginItemSettings({
+    openAtLogin: true,
+    path: app.getPath("exe")
+});
+
+
+function createWindow() {
+
+
+    win = new BrowserWindow({
+        width: 500,
+        height: 350,
+        frame: false,
+        webPreferences: {
+            nodeIntegration: true,
+            webSecurity: false,
+            experimentalFeatures: true,
+            allowRunningInsecureContent: true
+        },
+        icon: __dirname + "/static/image/avatar.png"
+    });
+
+    protocol.registerHttpProtocol(PROTOCOL_PREFIX, (req, cb) => {
+        const fullUrl = req.url;
+        console.log("Protocol");
+        win.loadFile('view/index.html');
+    });
+
+
+
+
+    win.on('ready-to-show', () => {
+        win.focus();
+        win.show();
+        win.webContents.openDevTools({ mode: 'undocked' });
+    });
+
+    win.loadFile('view/index.html');
+
+    // Open the DevTools.
+    // win.webContents.openDevTools();
+    win.setMenu(null);
+    win.setResizable(false);
+    win.center();
+
+    tray = new Tray(__dirname + "/static/image/avatar.png");
+    const contextMenu = Menu.buildFromTemplate([
+        {label: 'Open Caremeet'},
+        {label: 'Join Meeting'},
+        {label: 'Quit'}
+    ]);
+    tray.setToolTip('Caremeet.');
+    tray.setContextMenu(contextMenu);
+
+    win.on('will-resize', (e) => {
+        e.preventDefault();
+    });
+
+    win.on('closed', () => {
+        win = null;
+    });
+
+
+}
+app.on('ready', createWindow);
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+app.on('activate', () => {
+    if (win === null) {
+        createWindow();
+    }
+});

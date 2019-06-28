@@ -1,0 +1,20 @@
+{
+  "name": "caremeet-desktop",
+  "version": "1.0.0",
+  "description": "caremeet desktop application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "poovarasan vasudevan",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^5.0.6",
+    "electron-reload": "^1.4.0"
+  },
+  "dependencies": {
+    "custom-electron-titlebar": "^3.0.10",
+    "electron-titlebar-windows": "^3.0.0"
+  }
+}
