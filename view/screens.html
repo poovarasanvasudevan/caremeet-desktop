@@ -33,9 +33,9 @@
 
 
 <script src="../static/javascript/jquery.js"></script>
-<script src="../static/aui-prototyping.js"></script>
-<script src="../static/aui-prototyping.nodeps.js"></script>
-<script src="../static/aui-css-deprecations.js"></script>
+<script src="../static/javascript/aui-prototyping.js"></script>
+<script src="../static/javascript/aui-prototyping.nodeps.js"></script>
+<script src="../static/javascript/aui-css-deprecations.js"></script>
 <script src="../static/javascript/avatar.js"></script>
 <script src="../static/javascript/soyutils.js"></script>
 <script src="../static/javascript/soyutils_usegoog.js"></script>
@@ -56,24 +56,24 @@
     }
 
     function addSource(source) {
-        //let thumb = source.thumbnail.toDataURL();
-        //handleImageStream(thumb);
-
-        navigator.mediaDevices.getUserMedia({
-            audio: false,
-            video: {
-                mandatory: {
-                    chromeMediaSource: 'desktop',
-                    chromeMediaSourceId: source.id,
-                    minWidth: 1280,
-                    maxWidth: 1280,
-                    minHeight: 720,
-                    maxHeight: 720
-                }
-            }
-        }).then((stream) => {
-            handleVideoStream(stream);
-        });
+        let thumb = source.thumbnail.toDataURL();
+        handleImageStream(thumb);
+        //
+        // navigator.mediaDevices.getUserMedia({
+        //     audio: false,
+        //     video: {
+        //         mandatory: {
+        //             chromeMediaSource: 'desktop',
+        //             chromeMediaSourceId: source.id,
+        //             minWidth: 1280,
+        //             maxWidth: 1280,
+        //             minHeight: 720,
+        //             maxHeight: 720
+        //         }
+        //     }
+        // }).then((stream) => {
+        //     handleVideoStream(stream);
+        // });
 
     }
 
